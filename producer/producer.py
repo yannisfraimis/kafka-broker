@@ -18,7 +18,7 @@ def random_phone_num_generator():
 def main():
     while True:
         producer = KafkaProducer(
-            bootstrap_servers='localhost:9092',
+            bootstrap_servers='kafka-broker:9092',
             key_serializer=lambda k:json.dumps(k).encode('utf-8'),
             value_serializer=lambda v: json.dumps(v).encode('utf-8'))
         producer.send('calls', key=random_phone_num_generator(), value={'msg':[time(), randint(1,7200), random_phone_num_generator()]})
