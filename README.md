@@ -1,11 +1,11 @@
 #
-#
-# This file contains step in order to set up a simple system with one kafka broker and two simple python scripts named consumer.py and producer.py.
-# producer sends messages to kafka broker whereas consumer  coonsumes messages and prints in standard output information related to calls whose
-# duration is higher than X seconds.
-# 	
-#
-#
+# Kafka broker with producer and consumer
+
+
+ This file contains step in order to set up a simple system with one kafka broker and two simple python scripts named consumer.py and producer.py.
+ producer sends messages to kafka broker whereas consumer  coonsumes messages and prints in standard output information related to calls whose
+ duration is higher than X seconds.
+
 
 1. Please make sure that Docker is already installed in the system
 
