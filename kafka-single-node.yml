@@ -29,24 +29,45 @@ services:
     container_name: kafka-broker
     #entrypoint: /opt/bitnami/kafka/bin/kafka-topics.sh --create --topic calls --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
       
-
     depends_on:
       - "zookeeper"
     
+
+  init-kafka:
+    image: confluentinc/cp-kafka:6.1.1
+    depends_on:
+      - kafka
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      # List topics:
+      kafka-topics --bootstrap-server kafka:29092 --list
+
+      echo -e 'Creating kafka topic calls'
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic calls --replication-factor 1 --partitions 1
+
+      echo -e 'Successfully created the following topic:'
+      kafka-topics --bootstrap-server kafka:29092 --list
+      "
+
   producer:
     build: producer/
     ports:
       - 5001:5001 
     container_name: kafka-producer
-    
+    restart: on-failure:3
     depends_on:
-      - "kafka" 
+      - "consumer"
+     
 
   consumer:
     build: consumer/
     ports:
       - 5000:5000
+    environment:
+      - PYTHONUNBUFFERED=1
+    
     container_name: kafka-consumer 
-
+    restart: on-failure:3
     depends_on:
-      - "kafka"
+      - "init-kafka"
