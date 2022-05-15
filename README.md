@@ -23,10 +23,14 @@
 		          Name                         Command               State                           Ports
 		--------------------------------------------------------------------------------------------------------------------------
 		kafka-broker                /opt/bitnami/scripts/kafka ...   Up       0.0.0.0:29092->29092/tcp, 0.0.0.0:9092->9092/tcp
+		
 		kafka-broker_init-kafka_1   /bin/sh -c                       Exit 0
 									# List topics: ...
+									
 		kafka-consumer              python3 consumer.py --min_ ...   Up       0.0.0.0:5000->5000/tcp
+		
 		kafka-producer              python3 producer.py              Up       0.0.0.0:5001->5001/tcp
+		
 		zookeeper                   /opt/bitnami/scripts/zooke ...   Up       0.0.0.0:2181->2181/tcp, 2888/tcp, 3888/tcp, 8080/tcp	
 
 
@@ -36,4 +40,5 @@
 	 	docker-compose -f kafka-single-node.yml stop
 
 6. Stop and remove containers:
+
 		docker-compose -f kafka-single-node.yml down
